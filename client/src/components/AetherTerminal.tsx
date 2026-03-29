@@ -79,6 +79,13 @@ export const AetherTerminal: React.FC<{ isOpen: boolean; onClose: () => void }> 
         addLine('BIO: Crafting immersive digital experiences with Python, React, and AI.');
         break;
 
+      case 'whoami':
+        addLine('USER: GU_ADMIN_01');
+        addLine('ACCESS: LEVEL_5_OVERRIDE');
+        addLine('STATUS: AUTHENTICATED');
+        addLine('NEURAL_LINK: STABLE');
+        break;
+
       case COMMANDS.PROJECTS:
         addLine('FETCHING REPOSITORIES...');
         addLine('1. Dynamic Quiz Management System [Python]');
@@ -114,13 +121,14 @@ export const AetherTerminal: React.FC<{ isOpen: boolean; onClose: () => void }> 
         break;
 
       case COMMANDS.NEOFETCH:
-        addLine('      .---.      ayushi@aether-os');
-        addLine('     /     \\     ----------------');
-        addLine('    | () () |    OS: Aether OS v1.0');
-        addLine('     \\  ^  /     Kernel: React 19.2.1');
-        addLine('      \'---\'      Shell: Antigravity-Zsh');
-        addLine('                 Theme: ' + theme.toUpperCase());
-        addLine('                 CPU: Neural Interaction Engine');
+        addLine('      /\\      ayushi@aether-os');
+        addLine('     /  \\     ----------------');
+        addLine('    / /\\ \\    OS: Aether OS v5.0.42');
+        addLine('   / /__\\ \\   Kernel: React 19.x [GPGPU]');
+        addLine('  / /____\\ \\  Shell: Antigravity-Zsh v3.0');
+        addLine('  \\/      \\/  UI: Aether-Glass-Morphism');
+        addLine('              Uptime: ' + Math.floor(performance.now() / 1000) + 's');
+        addLine('              Memory: 1024TB [Neural Flash]');
         break;
 
       case COMMANDS.CLEAR:

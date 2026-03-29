@@ -384,6 +384,7 @@ export default function Home() {
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [isConsoleOpen, setIsConsoleOpen] = useState(false);
+  const [activeScan, setActiveScan] = useState(false);
 
   useEffect(() => {
     (window as any).openResumeScan = () => setIsResumeModalOpen(true);
@@ -395,8 +396,49 @@ export default function Home() {
       }
     };
     
+    // --- Neural Cursor Trail ---
+    const particles: HTMLDivElement[] = [];
+    const handleMouseMove = (e: MouseEvent) => {
+        const particle = document.createElement('div');
+        particle.className = 'neural-cursor-particle';
+        particle.style.left = `${e.clientX}px`;
+        particle.style.top = `${e.clientY}px`;
+        particle.style.opacity = '1';
+        document.body.appendChild(particle);
+        particles.push(particle);
+
+        gsap.to(particle, {
+            y: '+=20',
+            opacity: 0,
+            scale: 0.5,
+            duration: 0.8,
+            onComplete: () => {
+                particle.remove();
+                particles.shift();
+            }
+        });
+    };
+
+    // --- Section Scan Line Trigger ---
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setActiveScan(true);
+                setTimeout(() => setActiveScan(false), 2500);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    const sections = document.querySelectorAll('section');
+    sections.forEach(s => observer.observe(s));
+    
     window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+        window.removeEventListener('keydown', handleKeyPress);
+        window.removeEventListener('mousemove', handleMouseMove);
+        observer.disconnect();
+    };
   }, []);
 
   const handleDownload = () => {
@@ -411,6 +453,9 @@ export default function Home() {
 
   return (
     <main className="relative bg-[var(--background)] text-[var(--foreground)] min-h-screen overflow-x-hidden selection:bg-[#e91e8c]/30 selection:text-white transition-colors duration-500">
+      {/* OS Vital Units */}
+      <div className={`system-scan-line ${activeScan ? 'system-scan-active' : ''}`} />
+      
       <CyberpunkNeon />
       <CyberAudio />
       <SystemAssistant />

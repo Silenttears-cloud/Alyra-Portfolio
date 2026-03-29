@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ASHA_SYSTEM_PROMPT, ASHA_QUICK_CHIPS } from '@/data/ashaData';
 import { X, Send, Copy, Check, ChevronDown } from 'lucide-react';
 
@@ -313,18 +314,65 @@ export function SystemAssistant() {
       )}
       <button
         onClick={() => setIsOpen(o => !o)}
+        className="group relative"
         style={{ 
-          width: 60, height: 60, borderRadius: '50%', 
-          background: 'rgba(13,10,20,0.95)', border: '2px solid #e91e8c', 
+          width: 70, height: 70, borderRadius: '50%', 
+          background: 'rgba(13,10,20,0.8)', 
+          border: 'none',
           cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', 
-          boxShadow: '0 0 20px rgba(233,30,140,0.5)', transition: 'all 0.3s ease',
-          pointerEvents: 'auto'
+          boxShadow: '0 0 30px rgba(233,30,140,0.2)', transition: 'all 0.5s ease',
+          pointerEvents: 'auto',
+          overflow: 'visible'
         }}
         title="Chat with ASHA"
       >
+        {/* Holographic Orb SVG */}
+        <div className="absolute inset-0 flex items-center justify-center">
+            <svg width="100%" height="100%" viewBox="0 0 100 100" className="animate-pulse">
+                <defs>
+                    <radialGradient id="orbGradient" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stopColor="#ff6eb4" stopOpacity="0.8" />
+                        <stop offset="70%" stopColor="#e91e8c" stopOpacity="0.3" />
+                        <stop offset="100%" stopColor="transparent" stopOpacity="0" />
+                    </radialGradient>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                <motion.circle
+                    cx="50" cy="50"
+                    r="35"
+                    fill="url(#orbGradient)"
+                    animate={{ 
+                        scale: [1, 1.1, 1],
+                        opacity: [0.6, 0.9, 0.6],
+                        translateX: [-2, 2, -2],
+                        translateY: [-2, 2, -2]
+                    }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    filter="url(#glow)"
+                />
+                <motion.circle
+                    cx="50" cy="50"
+                    r="20"
+                    stroke="#00f5ff"
+                    strokeWidth="0.5"
+                    fill="none"
+                    animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0, 0.4] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                />
+            </svg>
+        </div>
+
         {isOpen
-          ? <ChevronDown size={24} color="#ff6eb4" />
-          : <span style={{ fontFamily: 'Orbitron, sans-serif', fontWeight: 900, fontSize: 14, background: 'linear-gradient(135deg, #e91e8c, #9b59b6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: 1 }}>ASHA</span>
+          ? <ChevronDown size={28} color="#ff6eb4" className="z-10" />
+          : <div className="z-10 flex flex-col items-center">
+              <span style={{ fontFamily: 'Orbitron, sans-serif', fontWeight: 900, fontSize: 13, color: '#fff', letterSpacing: 2, textShadow: '0 0 10px #e91e8c' }}>ASHA</span>
+              <div className="w-8 h-[1px] bg-[#00f5ff] opacity-40 mt-1" />
+            </div>
         }
       </button>
     </div>
