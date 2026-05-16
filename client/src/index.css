@@ -30,55 +30,55 @@
 }
 
 :root {
-  /* Nebula Light Theme - A high-fidelity "Soft Tech" aesthetic */
-  --background: #fdfafd; /* Near-white with a hint of rose */
-  --foreground: #0d0a14; /* Deep Plum */
-  --card: rgba(255, 255, 255, 0.85);
-  --card-foreground: #0d0a14;
+  /* Solar Nebula Light Theme - High Contrast & High Visibility */
+  --background: #f8fafc; 
+  --foreground: #0f172a; 
+  --card: rgba(255, 255, 255, 0.75);
+  --card-foreground: #0f172a;
   --popover: #ffffff;
-  --popover-foreground: #0d0a14;
+  --popover-foreground: #0f172a;
   
-  --primary: #e91e8c;
+  --primary: #e11d48;
   --primary-foreground: #ffffff;
-  --secondary: #9b59b6;
+  --secondary: #7c3aed;
   --secondary-foreground: #ffffff;
   
-  --muted: rgba(155, 89, 182, 0.05);
-  --muted-foreground: #666;
+  --muted: rgba(15, 23, 42, 0.05);
+  --muted-foreground: #475569;
   
-  --accent: #ff6eb4;
+  --accent: #f43f5e;
   --accent-foreground: #ffffff;
   
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   
-  --border: rgba(233, 30, 140, 0.2);
-  --input: rgba(233, 30, 140, 0.05);
-  --ring: #e91e8c;
+  --border: rgba(15, 23, 42, 0.1);
+  --input: rgba(15, 23, 42, 0.03);
+  --ring: #e11d48;
   
-  --glass-bg: rgba(255, 255, 255, 0.82);
-  --glass-border: rgba(233, 30, 140, 0.15);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(15, 23, 42, 0.08);
   --radius: 0.75rem;
 
-  /* Palette Tokens */
-  --deep-plum: #0d0a14;
-  --dark-amethyst: #1a0b2e;
-  --electric-rose: #e91e8c;
-  --hot-neon-pink: #ff6eb4;
-  --amethyst-violet: #9b59b6;
-  --soft-lavender: #cc99ff;
-  --aurora-teal: #008fa0; /* Adjusted for better contrast on light */
-  --pearl-white: #fdf0ff;
+  /* Palette Tokens for Light Mode */
+  --deep-plum: #0f172a;
+  --dark-amethyst: #1e1b4b;
+  --electric-rose: #e11d48;
+  --hot-neon-pink: #f43f5e;
+  --amethyst-violet: #7c3aed;
+  --soft-lavender: #a78bfa;
+  --aurora-teal: #0891b2; 
+  --pearl-white: #ffffff;
 }
 
 .dark {
-  /* Cosmic Dark Theme - Nebula x Aurora x Cyberpunk */
-  --background: #0d0a14; /* Deep Plum */
-  --foreground: #fdf0ff; /* Pearl White */
-  --card: rgba(20, 10, 30, 0.7);
-  --card-foreground: #fdf0ff;
-  --popover: #1a0b2e;
-  --popover-foreground: #fdf0ff;
+  /* Cosmic Dark Theme - Premium Deep Aesthetic */
+  --background: #030712; 
+  --foreground: #f8fafc; 
+  --card: rgba(17, 24, 39, 0.7);
+  --card-foreground: #f8fafc;
+  --popover: #111827;
+  --popover-foreground: #f8fafc;
   
   --primary: #e91e8c;
   --primary-foreground: #ffffff;
@@ -86,23 +86,29 @@
   --secondary-foreground: #ffffff;
   
   --muted: rgba(204, 153, 255, 0.1);
-  --muted-foreground: #cc99ff;
+  --muted-foreground: #94a3b8;
   
   --accent: #ff6eb4;
   --accent-foreground: #ffffff;
   
-  --destructive: #ef4444;
+  --destructive: #dc2626;
   --destructive-foreground: #ffffff;
   
-  --border: rgba(233, 30, 140, 0.3);
-  --input: rgba(30, 10, 40, 0.5);
+  --border: rgba(233, 30, 140, 0.2);
+  --input: rgba(30, 10, 40, 0.4);
   --ring: #e91e8c;
   
-  --glass-bg: rgba(30, 10, 40, 0.6);
-  --glass-border: rgba(233, 30, 140, 0.3);
+  --glass-bg: rgba(17, 24, 39, 0.75);
+  --glass-border: rgba(233, 30, 140, 0.25);
   
   --aurora-teal: #00f5ff;
+  --electric-rose: #e91e8c;
+  --hot-neon-pink: #ff6eb4;
+  --amethyst-violet: #9b59b6;
+  --soft-lavender: #cc99ff;
+  --deep-plum: #030712;
 }
+
 
 html {
   scroll-behavior: auto;

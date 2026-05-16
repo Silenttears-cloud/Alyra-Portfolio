@@ -4,6 +4,7 @@ import { Float, Environment, Points, PointMaterial, Text } from '@react-three/dr
 import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import { useAether } from '@/contexts/AetherContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
 // --- Shader Background Components ---
 const fragmentShader = `
@@ -11,6 +12,7 @@ uniform float uTime;
 uniform vec2 uResolution;
 uniform float uScrollY;
 uniform float uBrightness;
+uniform float uTheme; // 0 for dark, 1 for light
 
 #define PI 3.14159265359
 
@@ -53,19 +55,20 @@ void main() {
   
   float noise = n1 * 0.6 + n2 * 0.4;
   
-  vec3 darkPlum = vec3(0.05, 0.04, 0.08); 
-  vec3 electricRose = vec3(0.91, 0.12, 0.55);
-  vec3 amethystViolet = vec3(0.61, 0.35, 0.71);
+  // Theme-aware colors
+  vec3 darkPlum = mix(vec3(0.01, 0.02, 0.07), vec3(0.97, 0.98, 1.0), uTheme); 
+  vec3 primary = mix(vec3(0.91, 0.12, 0.55), vec3(0.88, 0.11, 0.28), uTheme);
+  vec3 secondary = mix(vec3(0.61, 0.35, 0.71), vec3(0.48, 0.22, 0.93), uTheme);
   
   vec3 color = darkPlum;
   float f1 = smoothstep(-0.2, 0.8, noise);
   float f2 = smoothstep(0.4, 1.0, noise);
   
-  color = mix(color, amethystViolet, f1 * 0.12);
-  color = mix(color, electricRose, f2 * 0.08);
+  color = mix(color, secondary, f1 * mix(0.12, 0.05, uTheme));
+  color = mix(color, primary, f2 * mix(0.08, 0.03, uTheme));
   
   float dist = distance(uv, vec2(0.5));
-  color *= smoothstep(1.0, 0.2, dist * 0.7);
+  color *= smoothstep(1.2, 0.4, dist * 0.7);
 
   gl_FragColor = vec4(color * uBrightness, 1.0);
 }
@@ -83,12 +86,14 @@ function BackgroundShader() {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const { size } = useThree();
   const { settings } = useAether();
+  const { theme } = useTheme();
   
   const uniforms = useMemo(() => ({
     uTime: { value: 0 },
     uResolution: { value: new THREE.Vector2(size.width, size.height) },
     uScrollY: { value: 0 },
-    uBrightness: { value: settings.brightness }
+    uBrightness: { value: settings.brightness },
+    uTheme: { value: theme === 'light' ? 1 : 0 }
   }), []);
 
   useFrame((state) => {
@@ -97,6 +102,11 @@ function BackgroundShader() {
       materialRef.current.uniforms.uScrollY.value = window.scrollY;
       materialRef.current.uniforms.uResolution.value.set(size.width, size.height);
       materialRef.current.uniforms.uBrightness.value = settings.brightness;
+      materialRef.current.uniforms.uTheme.value = THREE.MathUtils.lerp(
+        materialRef.current.uniforms.uTheme.value, 
+        theme === 'light' ? 1 : 0, 
+        0.05
+      );
     }
   });
 
@@ -114,6 +124,7 @@ function BackgroundShader() {
     </mesh>
   );
 }
+
 
 // --- Hero 3D Components ---
 function ParticleField() {
@@ -237,20 +248,24 @@ function MorphingCore() {
     const p2 = stateIdx === 0 ? states.neural : stateIdx === 1 ? states.matrix : stateIdx === 2 ? states.helix : states.helix;
 
     const positions = meshRef.current.geometry.attributes.position.array as Float32Array;
-    for (let i = 0; i < vertexCount * 3; i++) {
-      positions[i] = THREE.MathUtils.lerp(p1[i], p2[i], weight);
-      positions[i] += Math.sin(state.clock.elapsedTime + i) * 0.005;
+    const time = state.clock.elapsedTime;
+    
+    for (let i = 0; i < vertexCount * 3; i += 3) {
+      // Optimized lerp and wobble
+      positions[i] = THREE.MathUtils.lerp(p1[i], p2[i], weight) + Math.sin(time + i) * 0.01;
+      positions[i+1] = THREE.MathUtils.lerp(p1[i+1], p2[i+1], weight) + Math.cos(time + i) * 0.01;
+      positions[i+2] = THREE.MathUtils.lerp(p1[i+2], p2[i+2], weight) + Math.sin(time + i * 0.5) * 0.01;
     }
     meshRef.current.geometry.attributes.position.needsUpdate = true;
 
-    meshRef.current.rotation.y += 0.005;
-    meshRef.current.rotation.x = state.pointer.y * 0.2;
-    meshRef.current.rotation.z = state.pointer.x * 0.2;
+    meshRef.current.rotation.y += 0.003;
+    meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, state.pointer.y * 0.2, 0.1);
+    meshRef.current.rotation.z = THREE.MathUtils.lerp(meshRef.current.rotation.z, state.pointer.x * 0.2, 0.1);
 
-    const scale = 1 + Math.sin(state.clock.elapsedTime * 2) * 0.05;
+    const scale = 1 + Math.sin(time * 1.5) * 0.03;
     meshRef.current.scale.setScalar(scale);
 
-    const opacity = Math.max(0, 1 - (window.scrollY - 4000) / 1000);
+    const opacity = Math.max(0, 1 - (window.scrollY - 3000) / 1000);
     if (meshRef.current.material instanceof THREE.PointsMaterial) {
         meshRef.current.material.opacity = opacity;
     }
@@ -265,13 +280,12 @@ function MorphingCore() {
             count={vertexCount}
             array={currentPos}
             itemSize={3}
-            args={[currentPos, 3]}
           />
         </bufferGeometry>
         <PointMaterial
           transparent
           color="#e91e8c"
-          size={0.05}
+          size={0.04}
           sizeAttenuation={true}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
@@ -280,8 +294,8 @@ function MorphingCore() {
       
       {settings.gpuMode === 'ultra' && (
         <mesh>
-          <sphereGeometry args={[0.5, 32, 32]} />
-          <meshBasicMaterial color="#9b59b6" transparent opacity={0.2} blending={THREE.AdditiveBlending} />
+          <sphereGeometry args={[0.5, 16, 16]} />
+          <meshBasicMaterial color="#9b59b6" transparent opacity={0.15} blending={THREE.AdditiveBlending} />
         </mesh>
       )}
     </group>
@@ -299,9 +313,9 @@ function SectionHeaders() {
   return (
     <>
       {headers.map((h, i) => (
-        <Float key={i} speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
+        <Float key={i} speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
           <Text
-            position={[0, h.y + (window.scrollY * 0.01), -5]}
+            position={[0, h.y + (window.scrollY * 0.01), -8]}
             fontSize={1.2}
             color="#fdf0ff"
             font="https://fonts.gstatic.com/s/orbitron/v11/y97ZGS6ndY96C8UqWw.woff"
@@ -314,7 +328,7 @@ function SectionHeaders() {
             {h.text}
             <meshStandardMaterial 
               emissive="#e91e8c" 
-              emissiveIntensity={0.5} 
+              emissiveIntensity={0.3} 
               toneMapped={false} 
             />
           </Text>
@@ -331,79 +345,66 @@ function OrbitalLights() {
   
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
+    const scrollFactor = Math.max(0, 1 - window.scrollY / 1500);
+    
     if (light1Ref.current) {
-      light1Ref.current.position.x = Math.sin(t * 0.8) * 5;
-      light1Ref.current.position.z = Math.cos(t * 0.8) * 5;
-      light1Ref.current.intensity = 30 * Math.max(0, 1 - window.scrollY / 1000) * settings.brightness;
+      light1Ref.current.position.x = Math.sin(t * 0.5) * 6;
+      light1Ref.current.position.z = Math.cos(t * 0.5) * 6;
+      light1Ref.current.intensity = 25 * scrollFactor * settings.brightness;
     }
     if (light2Ref.current) {
-      light2Ref.current.position.x = Math.sin(t * 0.6 + Math.PI) * 4;
-      light2Ref.current.position.z = Math.cos(t * 0.6 + Math.PI) * 4;
-      light2Ref.current.intensity = 20 * Math.max(0, 1 - window.scrollY / 1000) * settings.brightness;
+      light2Ref.current.position.x = Math.sin(t * 0.4 + Math.PI) * 5;
+      light2Ref.current.position.z = Math.cos(t * 0.4 + Math.PI) * 5;
+      light2Ref.current.intensity = 15 * scrollFactor * settings.brightness;
     }
   });
 
   return (
     <>
-      <pointLight ref={light1Ref} color="#e91e8c" intensity={30} distance={20} />
-      <pointLight ref={light2Ref} color="#9b59b6" intensity={20} distance={20} />
+      <pointLight ref={light1Ref} color="#e91e8c" intensity={25} distance={25} />
+      <pointLight ref={light2Ref} color="#9b59b6" intensity={15} distance={20} />
     </>
   );
 }
 
 export function CombinedScene() {
-  const [glitch, setGlitch] = useState(0);
-  const lastSection = useRef(0);
   const { settings } = useAether();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentSection = Math.floor(window.scrollY / (window.innerHeight * 0.8));
-      if (currentSection !== lastSection.current) {
-        setGlitch(1);
-        lastSection.current = currentSection;
-        setTimeout(() => setGlitch(0), 150);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const { theme } = useTheme(); // Assuming useTheme is available or we can get it from context
 
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none">
+    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
       <Canvas 
-        camera={{ position: [0, 0, 10], fov: 45 }}
-        dpr={settings.gpuMode === 'eco' ? [1, 1] : [1, 1.5]}
+        camera={{ position: [0, 0, 12], fov: 40 }}
+        dpr={settings.gpuMode === 'eco' ? 1 : [1, 2]}
         gl={{ 
           antialias: false,
           powerPreference: "high-performance",
-          alpha: false 
+          alpha: false,
+          stencil: false,
+          depth: true
         }}
       >
         <Suspense fallback={null}>
           <BackgroundShader />
           
-          <ambientLight intensity={0.2 * settings.brightness} color="#cc99ff" />
-          {settings.gpuMode === 'ultra' ? <Environment preset="night" /> : null}
+          <ambientLight intensity={0.15 * settings.brightness} color="#cc99ff" />
+          {settings.gpuMode === 'ultra' && <Environment preset="night" />}
+          
           <OrbitalLights />
           <ParticleField />
           <MorphingCore />
           <SectionHeaders />
 
-          <EffectComposer>
+          <EffectComposer disableNormalPass>
             <Bloom 
-              intensity={settings.bloom * 1.5} 
-              luminanceThreshold={0.2} 
-              luminanceSmoothing={0.9} 
+              intensity={settings.bloom * 1.2} 
+              luminanceThreshold={0.3} 
+              luminanceSmoothing={0.75} 
             />
-            {settings.gpuMode === 'ultra' ? (
-              <ChromaticAberration
-                offset={new THREE.Vector2(0.002 * glitch, 0.002 * glitch)}
-              />
-            ) : null}
           </EffectComposer>
         </Suspense>
       </Canvas>
     </div>
   );
 }
+

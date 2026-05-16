@@ -21,12 +21,12 @@ export const AetherConsole: React.FC<{ isOpen: boolean; onClose: () => void }> =
         exit={{ opacity: 0, x: 100 }}
         className="fixed right-6 top-24 z-[100] w-72 h-[calc(100vh-160px)]"
       >
-        <div className="h-full bg-black/80 backdrop-blur-xl border border-[#e91e8c]/30 rounded-2xl flex flex-col overflow-hidden shadow-[0_0_40px_rgba(233,30,140,0.1)]">
+        <div className="h-full bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] rounded-2xl flex flex-col overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.2)] dark:shadow-[0_0_40px_rgba(233,30,140,0.1)] transition-colors duration-300">
           {/* Header */}
           <div className="p-6 border-b border-[#e91e8c]/10 bg-[#e91e8c]/5 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Sliders className="w-5 h-5 text-[#e91e8c]" />
-              <h3 className="font-orbitron font-bold text-sm tracking-widest text-[#fdf0ff] uppercase">Aether Console</h3>
+              <h3 className="font-orbitron font-bold text-sm tracking-widest text-[var(--foreground)] uppercase">Aether Console</h3>
             </div>
             <button onClick={onClose} className="text-[#ff6eb4] hover:rotate-90 transition-transform">
               <Zap size={18} />
@@ -118,9 +118,9 @@ export const AetherConsole: React.FC<{ isOpen: boolean; onClose: () => void }> =
           </div>
 
           {/* Footer Info */}
-          <div className="p-4 bg-white/5 flex items-center gap-3">
-             <Info className="w-4 h-4 text-[#00f5ff] shrink-0" />
-             <p className="text-[9px] text-white/60">
+          <div className="p-4 bg-[var(--muted)] flex items-center gap-3">
+             <Info className="w-4 h-4 text-[var(--aurora-teal)] shrink-0" />
+             <p className="text-[9px] text-[var(--foreground)] opacity-60">
                Dynamic environment protocols v1.0.42. Optimize based on your system cooling.
              </p>
           </div>

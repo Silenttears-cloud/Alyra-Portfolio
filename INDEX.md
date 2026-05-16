@@ -38,7 +38,7 @@ Complete setup instructions and deployment guide.
 - Prerequisites
 - Local development setup
 - Build for production
-- Deployment options (Manus, Vercel, Netlify, GitHub Pages, Docker)
+- Deployment options (Vercel, Netlify, GitHub Pages, Docker)
 - Environment configuration
 - Performance optimization
 - Security checklist
@@ -99,8 +99,6 @@ roushan-portfolio/
 │   ├── public/                   # Static assets
 │   │   ├── favicon.ico
 │   │   ├── robots.txt
-│   │   └── __manus__/
-│   │
 │   ├── src/
 │   │   ├── 🎨 components/        # React Components
 │   │   │   ├── ui/               # shadcn/ui components
@@ -108,7 +106,6 @@ roushan-portfolio/
 │   │   │   ├── Card3D.tsx                  # 3D card component
 │   │   │   ├── ErrorBoundary.tsx           # Error handling
 │   │   │   ├── Footer.tsx                  # Footer
-│   │   │   ├── ManusDialog.tsx             # Dialog
 │   │   │   ├── Map.tsx                     # Google Maps
 │   │   │   ├── Navigation.tsx              # Top nav
 │   │   │   ├── Scene3D.tsx                 # Three.js scene

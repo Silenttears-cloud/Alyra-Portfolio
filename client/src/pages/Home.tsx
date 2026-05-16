@@ -1,4 +1,4 @@
-import { useEffect, useRef, Suspense } from 'react';
+﻿import { useEffect, useRef, Suspense } from 'react';
 import { use3DScroll, useStaggerChildren, useCounterAnimation } from '@/hooks/use3DScroll';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
@@ -9,8 +9,7 @@ import { CombinedScene } from '@/components/CombinedScene';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-import { CyberAudio } from '@/components/CyberAudio';
-import { SystemAssistant } from '@/components/SystemAssistant';
+import { AlyraAssistant } from '@/components/AlyraAssistant';
 import { Github, Linkedin, Mail, Code, Zap, Award, ArrowRight, Sparkles, MessageSquare } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -457,8 +456,7 @@ export default function Home() {
       <div className={`system-scan-line ${activeScan ? 'system-scan-active' : ''}`} />
       
       <CyberpunkNeon />
-      <CyberAudio />
-      <SystemAssistant />
+      <AlyraAssistant />
       
       {/* Aether OS Core Units */}
       <SystemHUD />
@@ -515,3 +513,4 @@ export default function Home() {
     </main>
   );
 }
+

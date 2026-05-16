@@ -23,9 +23,9 @@ export function Navigation() {
     if (!navRef.current) return;
 
     gsap.to(navRef.current, {
-      backgroundColor: isScrolled ? 'rgba(13, 10, 20, 0.8)' : 'rgba(13, 10, 20, 0)',
+      backgroundColor: isScrolled ? 'var(--glass-bg)' : 'transparent',
       backdropFilter: isScrolled ? 'blur(12px)' : 'blur(0px)',
-      borderBottomColor: isScrolled ? 'rgba(233, 30, 140, 0.3)' : 'rgba(233, 30, 140, 0)',
+      borderBottomColor: isScrolled ? 'var(--glass-border)' : 'transparent',
       duration: 0.4,
       ease: 'power2.out',
     });
@@ -65,7 +65,7 @@ export function Navigation() {
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className="text-[#fdf0ff] hover:text-[#ff6eb4] transition-colors text-xs font-bold uppercase tracking-widest relative group font-mono"
+              className="text-[var(--foreground)] hover:text-[var(--primary)] opacity-80 hover:opacity-100 transition-all text-xs font-bold uppercase tracking-widest relative group font-mono"
             >
               {item.label}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#e91e8c] to-[#9b59b6] group-hover:w-full transition-all duration-300 shadow-[0_0_10px_#e91e8c]"></span>
@@ -79,7 +79,7 @@ export function Navigation() {
             href="https://github.com/Silenttears-cloud"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#fdf0ff] hover:text-[#ff6eb4] transition-colors p-2 hover:bg-[rgba(233,30,140,0.1)] rounded-sm border border-transparent hover:border-[rgba(233,30,140,0.3)]"
+            className="text-[var(--foreground)] hover:text-[var(--primary)] opacity-80 hover:opacity-100 transition-all p-2 hover:bg-[var(--muted)] rounded-sm border border-transparent hover:border-[var(--glass-border)]"
             aria-label="GitHub"
           >
             <Github className="w-5 h-5" />
@@ -88,7 +88,7 @@ export function Navigation() {
             href="https://www.linkedin.com/in/ayushi-raj-299a99388/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#fdf0ff] hover:text-[#ff6eb4] transition-colors p-2 hover:bg-[rgba(233,30,140,0.1)] rounded-sm border border-transparent hover:border-[rgba(233,30,140,0.3)]"
+            className="text-[var(--foreground)] hover:text-[var(--primary)] opacity-80 hover:opacity-100 transition-all p-2 hover:bg-[var(--muted)] rounded-sm border border-transparent hover:border-[var(--glass-border)]"
             aria-label="LinkedIn"
           >
             <Linkedin className="w-5 h-5" />
@@ -98,7 +98,7 @@ export function Navigation() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden text-[#fdf0ff] hover:text-[#ff6eb4] transition-colors"
+          className="md:hidden text-[var(--foreground)] hover:text-[var(--primary)] transition-colors"
           aria-label="Toggle Menu"
         >
           {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -107,7 +107,7 @@ export function Navigation() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-[rgba(13,10,20,0.95)] backdrop-blur-xl shadow-2xl border-t border-[rgba(233,30,140,0.2)] animate-in slide-in-from-top duration-300">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-[var(--background)] backdrop-blur-xl shadow-2xl border-t border-[var(--glass-border)] animate-in slide-in-from-top duration-300">
           <div className="flex flex-col gap-4 p-8">
             {[
               { label: 'About', id: 'about' },

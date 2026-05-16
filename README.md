@@ -261,11 +261,6 @@ VITE_ANALYTICS_ID=your-id
 
 ## 🚀 Deployment
 
-### Manus (Recommended)
-1. Create checkpoint (already done)
-2. Click "Publish" in Management UI
-3. Configure custom domain (optional)
-
 ### Vercel
 ```bash
 npm i -g vercel

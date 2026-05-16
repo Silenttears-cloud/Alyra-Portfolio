@@ -4,7 +4,7 @@
 
 An immersive 3D portfolio website built with React, Three.js, GSAP, and Tailwind CSS. Features scroll-triggered animations, animated particle backgrounds, and a cyberpunk neon aesthetic design.
 
-**Live URL:** https://3000-itx1twjxqndpxsqb97vy1-615c5e8a.us2.manus.computer
+**Live URL:** https://your-portfolio.vercel.app
 
 **Version:** cc13f2c4
 
@@ -18,8 +18,6 @@ roushan-portfolio/
 │   ├── public/                      # Static assets
 │   │   ├── favicon.ico
 │   │   ├── robots.txt
-│   │   └── __manus__/
-│   │       └── version.json
 │   ├── src/
 │   │   ├── components/              # Reusable React components
 │   │   │   ├── ui/                  # shadcn/ui components
@@ -27,7 +25,6 @@ roushan-portfolio/
 │   │   │   ├── Card3D.tsx                  # 3D card with hover effects
 │   │   │   ├── ErrorBoundary.tsx           # Error handling wrapper
 │   │   │   ├── Footer.tsx                  # Footer component
-│   │   │   ├── ManusDialog.tsx             # Dialog component
 │   │   │   ├── Map.tsx                     # Google Maps integration
 │   │   │   ├── Navigation.tsx              # Top navigation bar
 │   │   │   ├── Scene3D.tsx                 # Three.js 3D scene
@@ -409,7 +406,7 @@ All components use Tailwind's responsive prefixes:
 - Network tab for asset loading
 
 ### Logs
-- Check `.manus-logs/` directory for server logs
+- Check `dist/` directory for production build logs
 - Browser console for client-side errors
 
 ---

@@ -2,49 +2,27 @@
 setlocal
 cls
 
-:menu
 echo ==========================================
-echo       Project Run Menu (Windows)
+echo       Starting Portfolio Website...
 echo ==========================================
-echo 1. Start Development Server (pnpm dev)
-echo 2. Build for Production (pnpm build)
-echo 3. Start Production Server (node dist/index.js)
-echo 4. Exit
-echo ==========================================
-set /p choice="Select an option (1-4): "
 
-if "%choice%"=="1" (
-    echo Starting Development Server...
-    pnpm run dev
-    pause
-    goto menu
+:: Check if pnpm is installed, if not use npx
+where pnpm >nul 2>nul
+if %ERRORLEVEL% equ 0 (
+    set PNPM_CMD=pnpm
+) else (
+    echo [INFO] pnpm not found in PATH, using npx pnpm...
+    set PNPM_CMD=npx pnpm
 )
 
-if "%choice%"=="2" (
-    echo Building for Production...
-    pnpm run build
-    pause
-    goto menu
+:: Check for node_modules
+if not exist "node_modules\" (
+    echo [INFO] node_modules not found. Installing dependencies...
+    %PNPM_CMD% install
 )
 
-if "%choice%"=="3" (
-    if not exist "dist/index.js" (
-        echo [ERROR] Production build not found. Please run Option 2 first.
-        pause
-        goto menu
-    )
-    echo Starting Production Server...
-    set NODE_ENV=production
-    node dist/index.js
-    pause
-    goto menu
-)
+:: Start the development server
+echo [INFO] Launching development server...
+%PNPM_CMD% run dev
 
-if "%choice%"=="4" (
-    echo Exiting...
-    exit /b
-)
-
-echo Invalid choice, please try again.
 pause
-goto menu

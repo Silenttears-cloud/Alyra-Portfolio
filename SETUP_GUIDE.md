@@ -102,29 +102,9 @@ Ensure no TypeScript errors.
 
 ## 🌐 Deployment Options
 
-### Option 1: Deploy on Manus (Recommended)
-
-**Advantages:**
-- Built-in hosting with custom domains
-- Automatic SSL/HTTPS
-- CDN for fast delivery
-- One-click deployment
-
-**Steps:**
-1. Create checkpoint (already done)
-2. Click "Publish" button in Management UI
-3. Configure custom domain (optional)
-4. Done! Your site is live
-
-**Custom Domain:**
-1. Go to Settings → Domains
-2. Purchase new domain or connect existing
-3. Update DNS records
-4. Assign to your Manus webapp
-
 ---
 
-### Option 2: Deploy on Vercel
+### Option 1: Deploy on Vercel
 
 **Setup:**
 ```bash
@@ -564,7 +544,6 @@ pnpm install
 
 ## 📞 Support & Resources
 
-- **Manus Documentation:** https://docs.manus.im
 - **Vite Documentation:** https://vitejs.dev
 - **React Documentation:** https://react.dev
 - **Tailwind CSS:** https://tailwindcss.com
