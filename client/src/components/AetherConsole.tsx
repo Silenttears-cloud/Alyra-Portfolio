@@ -19,11 +19,15 @@ export const AetherConsole: React.FC<{ isOpen: boolean; onClose: () => void }> =
         initial={{ opacity: 0, x: 100 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: 100 }}
+        drag
+        dragMomentum={false}
+        dragElastic={0.05}
+        dragConstraints={{ left: -600, right: 100, top: -100, bottom: 400 }}
         className="fixed right-6 top-24 z-[100] w-72 h-[calc(100vh-160px)]"
       >
         <div className="h-full bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] rounded-2xl flex flex-col overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.2)] dark:shadow-[0_0_40px_rgba(233,30,140,0.1)] transition-colors duration-300">
           {/* Header */}
-          <div className="p-6 border-b border-[#e91e8c]/10 bg-[#e91e8c]/5 flex items-center justify-between">
+          <div className="p-6 border-b border-[#e91e8c]/10 bg-[#e91e8c]/5 flex items-center justify-between cursor-grab active:cursor-grabbing select-none">
             <div className="flex items-center gap-3">
               <Sliders className="w-5 h-5 text-[#e91e8c]" />
               <h3 className="font-orbitron font-bold text-sm tracking-widest text-[var(--foreground)] uppercase">Aether Console</h3>

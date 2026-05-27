@@ -12,6 +12,7 @@ interface Message {
 // ─── Markdown Renderer ────────────────────────────────────────────────────────
 function formatInline(text: string): string {
   return text
+    .replace(/\[CMD:[^\]]+\]/g, '')
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:var(--aurora-teal);text-decoration:underline">$1</a>')
     .replace(/\*\*(.*?)\*\*/g, '<strong style="color:var(--primary)">$1</strong>')
@@ -88,7 +89,6 @@ export function AlyraAssistant() {
     atBottom.current = true;
 
     const geminiKey = (import.meta.env.VITE_GEMINI_API_KEY || '') as string;
-    const orKey = (import.meta.env.VITE_OPENROUTER_API_KEY || '') as string;
 
     const controller = new AbortController();
     abortRef.current = controller;
@@ -107,7 +107,7 @@ export function AlyraAssistant() {
         }));
 
         const res = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent?key=${geminiKey}&alt=sse`,
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?key=${geminiKey}&alt=sse`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -151,72 +151,50 @@ export function AlyraAssistant() {
         }
       } catch (err: unknown) {
         if ((err as Error).name === 'AbortError') { setIsStreaming(false); return; }
-        console.warn('Gemini failed, trying fallback:', err);
-      }
-    }
-
-    // ── Strategy 2: OpenRouter fallback ───────────────────────────────────
-    if (!succeeded && orKey && !controller.signal.aborted) {
-      try {
-        const orHistory = messages.slice(1).map(m => ({ role: m.role, content: m.content }));
-        const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${orKey}`,
-            'HTTP-Referer': window.location.origin,
-            'X-Title': 'Alyra Assistant',
-          },
-          signal: controller.signal,
-          body: JSON.stringify({
-            model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
-            stream: true,
-            messages: [
-              { role: 'system', content: ALYRA_SYSTEM_PROMPT },
-              ...orHistory,
-              { role: 'user', content: text },
-            ],
-            temperature: 0.7,
-          }),
-        });
-
-        if (res.ok) {
-          const reader = res.body!.getReader();
-          const dec = new TextDecoder();
-          let buf = '';
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            buf += dec.decode(value, { stream: true });
-            const lines = buf.split('\n');
-            buf = lines.pop() ?? '';
-            for (const line of lines) {
-              if (!line.startsWith('data: ')) continue;
-              const raw = line.slice(6).trim();
-              if (raw === '[DONE]') continue;
-              try {
-                const data = JSON.parse(raw);
-                const chunk = data?.choices?.[0]?.delta?.content ?? '';
-                if (chunk) setMessages(prev => prev.map(m => m.id === asstId ? { ...m, content: m.content + chunk } : m));
-              } catch { /* skip */ }
-            }
-          }
-          succeeded = true;
-        }
-      } catch (err: unknown) {
-        if ((err as Error).name === 'AbortError') { setIsStreaming(false); return; }
-        console.error('OpenRouter fallback also failed:', err);
+        console.warn('Gemini failed:', err);
       }
     }
 
     if (!succeeded && !controller.signal.aborted) {
       setMessages(prev => prev.map(m => m.id === asstId
-        ? { ...m, content: '⚠️ Both Gemini and the fallback are temporarily unavailable. Please try again in a moment.' }
+        ? { ...m, content: '⚠️ Gemini is temporarily unavailable. Please verify your API key is correct and active.' }
         : m));
     }
 
     setIsStreaming(false);
     abortRef.current = null;
+
+    // Parse commands from the final output
+    setMessages(prev => {
+      const finalMsg = prev.find(m => m.id === asstId);
+      if (finalMsg && finalMsg.content) {
+        const textContent = finalMsg.content;
+        
+        // Command 1: Scroll to sections
+        if (textContent.includes('[CMD:SCROLL:')) {
+          const match = textContent.match(/\[CMD:SCROLL:(\w+)\]/);
+          if (match && match[1]) {
+            const targetId = match[1];
+            setTimeout(() => {
+              const element = document.getElementById(targetId);
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }, 600);
+          }
+        }
+        
+        // Command 2: Open Resume scan modal
+        if (textContent.includes('[CMD:MODAL:resume]')) {
+          setTimeout(() => {
+            if ((window as any).openResumeScan) {
+              (window as any).openResumeScan();
+            }
+          }, 600);
+        }
+      }
+      return prev;
+    });
   }, [messages, isStreaming]);
 
   const handleKey = (e: React.KeyboardEvent) => {

@@ -7,12 +7,13 @@ interface HolographicCardProps {
   description: string;
   tech: string[];
   link: string;
+  demoLink?: string;
   date: string;
   index: number;
   previewUrl?: string;
 }
 
-export function HolographicCard({ title, description, tech, link, date, index, previewUrl }: HolographicCardProps) {
+export function HolographicCard({ title, description, tech, link, demoLink, date, index, previewUrl }: HolographicCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [shimmerPosition, setShimmerPosition] = useState({ x: 50, y: 50 });
@@ -146,15 +147,29 @@ export function HolographicCard({ title, description, tech, link, date, index, p
               ))}
             </div>
 
-            <a
-              href={link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex max-w-max items-center gap-2 text-[#e91e8c] hover:text-[#00f5ff] font-bold transition-all group/link uppercase tracking-[0.2em] text-[10px] font-mono border-b border-[#e91e8c]/20 hover:border-[#00f5ff] pb-1"
-            >
-              DECRYPT SOURCE_CODE
-              <ExternalLink className="w-3 h-3 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
-            </a>
+            <div className="flex flex-wrap gap-4 items-center mt-auto">
+              <a
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex max-w-max items-center gap-2 text-[#e91e8c] hover:text-[#00f5ff] font-bold transition-all group/link uppercase tracking-[0.2em] text-[10px] font-mono border-b border-[#e91e8c]/20 hover:border-[#00f5ff] pb-1"
+              >
+                DECRYPT SOURCE_CODE
+                <ExternalLink className="w-3 h-3 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
+              </a>
+
+              {demoLink && (
+                <a
+                  href={demoLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex max-w-max items-center gap-2 text-[#00f5ff] hover:text-[#e91e8c] font-bold transition-all group/link uppercase tracking-[0.2em] text-[10px] font-mono border-b border-[#00f5ff]/20 hover:border-[#e91e8c] pb-1"
+                >
+                  LAUNCH LIVE_DEMO
+                  <ExternalLink className="w-3 h-3 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </div>

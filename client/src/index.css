@@ -447,3 +447,8 @@ html {
   z-index: 9999;
   box-shadow: 0 0 10px #e91e8c;
 }
+
+@keyframes scanline-move {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}

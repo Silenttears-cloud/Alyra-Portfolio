@@ -9,7 +9,7 @@ import Home from "./pages/Home";
 import { LoadingScreen } from "./components/LoadingScreen";
 import { ScrollProgress } from "./components/ScrollProgress";
 import { CursorTrail } from "./components/CursorTrail";
-import { SystemAssistant } from "./components/SystemAssistant";
+import { AlyraAssistant } from "./components/AlyraAssistant";
 
 
 import { AetherProvider } from "./contexts/AetherContext";
@@ -39,7 +39,7 @@ function App() {
             ) : (
               <>
                 <ScrollProgress />
-                <SystemAssistant />
+                <AlyraAssistant />
                 <div className="animate-asha-fade">
                   <CursorTrail />
                   <Toaster />

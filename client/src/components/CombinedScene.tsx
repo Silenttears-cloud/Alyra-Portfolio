@@ -276,10 +276,12 @@ function MorphingCore() {
       <Points key={`morph-${vertexCount}`} ref={meshRef}>
         <bufferGeometry>
           <bufferAttribute
-            attach="attributes-position"
-            count={vertexCount}
-            array={currentPos}
-            itemSize={3}
+            {...({
+              attach: "attributes-position",
+              count: vertexCount,
+              array: currentPos,
+              itemSize: 3
+            } as any)}
           />
         </bufferGeometry>
         <PointMaterial
@@ -395,7 +397,7 @@ export function CombinedScene() {
           <MorphingCore />
           <SectionHeaders />
 
-          <EffectComposer disableNormalPass>
+          <EffectComposer {...({ disableNormalPass: true } as any)}>
             <Bloom 
               intensity={settings.bloom * 1.2} 
               luminanceThreshold={0.3} 

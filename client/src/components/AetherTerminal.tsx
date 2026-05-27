@@ -87,22 +87,23 @@ export const AetherTerminal: React.FC<{ isOpen: boolean; onClose: () => void }> 
         break;
 
       case COMMANDS.PROJECTS:
-        addLine('FETCHING REPOSITORIES...');
-        addLine('1. Dynamic Quiz Management System [Python]');
-        addLine('2. AI CRM HCP Interaction Hub [Python/React]');
-        addLine('3. Student Record Management System [Python/CLI]');
+        addLine('FETCHING SECURE REPOSITORIES...');
+        addLine('1. Zero-Knowledge Password Manager [React/TS/Crypto]');
+        addLine('2. AXIOM Orchestration Gateway [Python/React/Redis]');
+        addLine('3. Astra Vision [Python/YOLO/PyTorch]');
+        addLine('4. AI CRM HCP Interaction Hub [Python/FastAPI/React]');
         break;
 
       case COMMANDS.SKILLS:
         addLine('CORE LOGIC: Python, JavaScript, TypeScript');
-        addLine('INTERFACE: React, Tailwind, Three.js');
-        addLine('BACKEND: FastAPI, Node.js, PostgreSQL');
-        addLine('AI SYSTEMS: Prompt Engineering, Gemini API');
+        addLine('INTERFACE: React, Tailwind CSS, Three.js, Canvas 3D');
+        addLine('BACKEND: FastAPI, Node.js, MySQL, PostgreSQL, Redis');
+        addLine('AI SYSTEMS: Prompt Engineering, LangGraph, Gemini API');
         break;
 
       case COMMANDS.CONTACT:
         addLine('GITHUB: github.com/Silenttears-cloud');
-        addLine('LINKEDIN: linkedin.com/in/ayushi-raj');
+        addLine('LINKEDIN: linkedin.com/in/ayushi-raj-299a99388/');
         addLine('EMAIL: ayushi29507@gmail.com');
         break;
 
@@ -170,12 +171,16 @@ export const AetherTerminal: React.FC<{ isOpen: boolean; onClose: () => void }> 
           width: isMinimized ? '200px' : 'min(700px, 95vw)'
         }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
+        drag
+        dragMomentum={false}
+        dragElastic={0.05}
+        dragConstraints={{ left: -400, right: 400, top: -400, bottom: 200 }}
         className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[100] overflow-hidden"
         style={{ pointerEvents: 'auto' }}
       >
         <div className="w-full h-full bg-black/90 border border-[#e91e8c]/40 rounded-lg flex flex-col shadow-[0_0_30px_rgba(233,30,140,0.2)] backdrop-blur-md">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-2 border-b border-[#e91e8c]/20 bg-[#e91e8c]/5 cursor-default select-none">
+          <div className="flex items-center justify-between px-4 py-2 border-b border-[#e91e8c]/20 bg-[#e91e8c]/5 cursor-grab active:cursor-grabbing select-none">
             <div className="flex items-center gap-2">
               <Terminal className="w-4 h-4 text-[#e91e8c]" />
               <span className="text-[10px] uppercase tracking-widest text-[#fdf0ff] font-mono font-bold">Aether Terminal</span>

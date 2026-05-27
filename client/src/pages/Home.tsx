@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, Suspense } from 'react';
+import { useEffect, useRef, Suspense } from 'react';
 import { use3DScroll, useStaggerChildren, useCounterAnimation } from '@/hooks/use3DScroll';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
@@ -10,7 +10,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { AlyraAssistant } from '@/components/AlyraAssistant';
-import { Github, Linkedin, Mail, Code, Zap, Award, ArrowRight, Sparkles, MessageSquare } from 'lucide-react';
+import { Github, Linkedin, Mail, Code, Zap, Award, ArrowRight, Sparkles, MessageSquare, Terminal, Shield, Cpu } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -25,6 +26,7 @@ import { useState } from 'react';
 import { AetherTerminal } from '@/components/AetherTerminal';
 import { AetherConsole } from '@/components/AetherConsole';
 import { SystemHUD } from '@/components/SystemHUD';
+import { TagCloud3D } from '@/components/TagCloud3D';
 import { Sliders, Monitor } from 'lucide-react';
 
 
@@ -112,33 +114,169 @@ function HeroSection() {
 
 
 
+function AboutSection() {
+  const sectionRef = use3DScroll() as React.RefObject<HTMLDivElement>;
+
+  return (
+    <section id="about" ref={sectionRef} className="py-32 px-4 relative z-10 border-t border-[rgba(233,30,140,0.2)] bg-[rgba(10,5,15,0.3)]">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-20">
+          <SplitTextGlow text="NEURAL ARCHITECT PROFILE" className="text-4xl md:text-6xl font-black mb-4 justify-center" colorType="primary" />
+          <p className="text-[#00f5ff] text-lg font-mono tracking-widest uppercase">System Core & Identity Credentials</p>
+        </div>
+
+        <div className="grid lg:grid-cols-12 gap-12 items-center">
+          {/* Portrait Column (Left) */}
+          <div className="lg:col-span-5 flex justify-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative group p-4 border border-[var(--glass-border)] bg-[var(--glass-bg)] backdrop-blur-2xl rounded-[32px] overflow-hidden max-w-[350px] w-full shadow-[0_0_30px_rgba(233,30,140,0.15)] hover:shadow-[0_0_50px_rgba(233,30,140,0.3)] hover:border-[#e91e8c]/50 transition-all duration-500"
+            >
+              {/* Telemetry HUD Borders */}
+              <div className="absolute top-2 left-6 text-[8px] font-mono text-[#ff6eb4] uppercase tracking-widest opacity-60">
+                [SYS_ID: AYUSHI_RAJ_V2.0.7]
+              </div>
+              <div className="absolute top-2 right-6 text-[8px] font-mono text-[#00f5ff] uppercase tracking-widest opacity-60">
+                [LOC: Nawada, Bihar]
+              </div>
+              
+              {/* Scanline & Grid Overlays */}
+              <div className="absolute inset-4 rounded-[22px] overflow-hidden pointer-events-none z-20">
+                {/* Horizontal scanline */}
+                <div className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-[#00f5ff]/60 to-transparent top-0 animate-[scanline-move_4s_linear_infinite]" />
+                {/* HUD Corners */}
+                <div className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-[#00f5ff] opacity-80" />
+                <div className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-[#00f5ff] opacity-80" />
+                <div className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-[#00f5ff] opacity-80" />
+                <div className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-[#00f5ff] opacity-80" />
+                
+                {/* Interactive Diagnostic Box */}
+                <div className="absolute bottom-4 left-4 right-4 bg-black/75 border border-[#e91e8c]/30 p-2 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="flex justify-between items-center text-[7px] font-mono text-[#ff6eb4] mb-1">
+                    <span>BIO_LINK: ONLINE</span>
+                    <span>98.6% CORE_SYS</span>
+                  </div>
+                  <div className="w-full h-1 bg-[#1a0a20] rounded-full overflow-hidden">
+                    <div className="w-[94%] h-full bg-[#00ff99] animate-pulse" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Glowing Corner Accents */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(233,30,140,0.15)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
+
+              {/* The Portrait Image */}
+              <div className="relative w-full aspect-[4/5] rounded-[22px] overflow-hidden bg-black border border-[rgba(233,30,140,0.15)]">
+                <img
+                  src="/ayushi.jpg"
+                  alt="Ayushi Raj Portrait"
+                  className="w-full h-full object-cover scale-102 group-hover:scale-105 transition-transform duration-700 opacity-85 group-hover:opacity-100"
+                />
+              </div>
+
+              <div className="mt-4 flex justify-between items-center text-[9px] font-mono text-[#cc99ff] px-2 opacity-80">
+                <span className="flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00ff99] animate-ping" />
+                  BIOLOGICAL_SYS: LOCKED
+                </span>
+                <span>COORD: 25.12N, 85.12E</span>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Biography Column (Right) */}
+          <div className="lg:col-span-7 flex flex-col justify-center space-y-8">
+            <div className="space-y-4">
+              <h3 className="text-2xl md:text-3xl font-bold text-white font-orbitron tracking-wide flex items-center gap-3">
+                <span className="text-[#e91e8c] font-mono">//</span> CORE INTEGRATOR
+              </h3>
+              <p className="text-[#fdf0ff] opacity-80 text-sm md:text-base leading-relaxed font-mono">
+                Greetings, operator. I am Ayushi Raj, an AI & Full-Stack Architect specialized in constructing secure, robust, and highly performant digital systems. Bridging the gap between raw computational logic and creative artificial intelligence models, I engineer products designed to scale.
+              </p>
+              <p className="text-[#fdf0ff] opacity-80 text-sm md:text-base leading-relaxed font-mono">
+                Currently operating at <span className="text-[#00f5ff]">Amity University Noida</span> (Bachelor of Computer Applications), I focus on implementing localized encryption protocols (such as Zero-Knowledge architectures) and low-latency API grids. My systems are optimized for maximum uptime, high visual excellence, and complete accessibility.
+              </p>
+            </div>
+
+            {/* Core Specifications Table */}
+            <div className="grid sm:grid-cols-2 gap-6 bg-black/45 border border-[rgba(155,89,182,0.2)] p-6 rounded-2xl backdrop-blur-md">
+              <div className="space-y-1">
+                <span className="text-[10px] text-[#00f5ff] font-mono uppercase tracking-[0.2em]">OPERATING BASE</span>
+                <p className="text-white text-sm font-bold">Nawada, Bihar, India</p>
+              </div>
+              <div className="space-y-1">
+                <span className="text-[10px] text-[#e91e8c] font-mono uppercase tracking-[0.2em]">CURRENT STATION</span>
+                <p className="text-white text-sm font-bold">Amity University Noida</p>
+              </div>
+              <div className="space-y-1">
+                <span className="text-[10px] text-[#cc99ff] font-mono uppercase tracking-[0.2em]">CORE ARCHITECTURES</span>
+                <p className="text-white text-sm font-bold">Python, React, FastAPI, WebCrypto</p>
+              </div>
+              <div className="space-y-1">
+                <span className="text-[10px] text-[#00ff99] font-mono uppercase tracking-[0.2em]">AI PROTOCOLS</span>
+                <p className="text-white text-sm font-bold">Gemini API (Certified), Prompt Eng</p>
+              </div>
+            </div>
+
+            {/* Micro-Credentials */}
+            <div className="flex flex-wrap gap-4 pt-2">
+              <div className="flex items-center gap-2 px-4 py-2 bg-[rgba(233,30,140,0.06)] border border-[#e91e8c]/25 rounded-lg text-xs font-mono text-[#ff6eb4]">
+                <Cpu size={14} className="animate-spin-slow" /> GEMINI CERTIFIED
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-[rgba(0,245,255,0.06)] border border-[#00f5ff]/25 rounded-lg text-xs font-mono text-[#00f5ff]">
+                <Shield size={14} /> ZERO-KNOWLEDGE ARCH
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-[rgba(155,89,182,0.06)] border border-[#9b59b6]/25 rounded-lg text-xs font-mono text-[#cc99ff]">
+                <Terminal size={14} /> CLI INTELLIGENCE
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ProjectsSection() {
   const sectionRef = use3DScroll() as React.RefObject<HTMLDivElement>;
 
   const projects = [
     {
-      title: 'Dynamic Quiz Management System',
-      description: 'Python-based structural logic application with advanced user and admin modes for dynamic data management.',
-      tech: ['Python', 'File Architecture', 'Modular Programming'],
-      link: 'https://github.com/Silenttears-cloud/Dynamic-Quiz-Management-System',
-      date: 'Jan 2026',
+      title: 'Zero-Knowledge Password Manager',
+      description: 'A highly secure, client-side encrypted password manager. Designed for local-first cryptographic vault storage and secure sync protocol.',
+      tech: ['React', 'TypeScript', 'Web Crypto API', 'AES-GCM', 'PBKDF2'],
+      link: 'https://github.com/Silenttears-cloud/Zero-knowledge-password-manager-',
+      demoLink: 'https://alyra-lock.vercel.app/',
+      date: 'Feb 2026',
       previewUrl: '/quiz-preview.png'
     },
     {
-      title: 'AI CRM HCP Interaction Hub',
-      description: 'AI-driven CRM system for logging healthcare professional interactions with an advanced neural chat interface.',
-      tech: ['Python', 'React', 'FastAPI', 'JavaScript'],
-      link: 'https://github.com/Silenttears-cloud/ai-crm-hcp-log-interaction',
-      date: 'Mar 2026',
+      title: 'AXIOM Orchestration Gateway',
+      description: 'A high-performance systems orchestration control plane and service grid. Implements low-latency routing and dynamic service telemetry metrics.',
+      tech: ['Python', 'FastAPI', 'React', 'Redis', 'WebSockets', 'Telemetry'],
+      link: 'https://github.com/Silenttears-cloud/AXIOM-Orchestration-Gateway',
+      demoLink: 'https://axiom-orchestration-gateway.onrender.com/dashboard',
+      date: 'May 2026',
       previewUrl: '/crm-preview.png'
     },
     {
-      title: 'Student Record Management System',
-      description: 'A comprehensive student record management system with secure authentication, data management, and admin controls.',
-      tech: ['Python', 'File Management', 'Admin Auth', 'CLI'],
-      link: 'https://github.com/Silenttears-cloud/Student-Record-Management-System',
-      date: '2025',
+      title: 'Astra Vision',
+      description: 'Advanced AI computer vision platform featuring real-time image segmentations, object tracking pipelines, and spatial computer intelligence models.',
+      tech: ['Python', 'PyTorch', 'OpenCV', 'FastAPI', 'React', 'YOLO'],
+      link: 'https://github.com/Silenttears-cloud/Astra_vision',
+      date: 'Apr 2026',
       previewUrl: '/prompt-preview.png'
+    },
+    {
+      title: 'AI CRM HCP Interaction Hub',
+      description: 'An AI-integrated CRM solution built for pharma representative tracking, logging doctor interactions with automated semantic and sentiment categorizations.',
+      tech: ['Python', 'FastAPI', 'React', 'SQLite', 'Google Gemini API'],
+      link: 'https://github.com/Silenttears-cloud/ai-crm-hcp-log-interaction',
+      date: 'Mar 2026',
+      previewUrl: '/crm-preview.png'
     },
   ];
 
@@ -162,42 +300,25 @@ function ProjectsSection() {
 
 function SkillsSection() {
   const sectionRef = use3DScroll() as React.RefObject<HTMLDivElement>;
-  const containerRef = useStaggerChildren() as React.RefObject<HTMLDivElement>;
-
-  const skills = {
-    'Core Logic': ['Python', 'JavaScript', 'TypeScript'],
-    'Frontend Interface': ['React', 'Redux', 'Tailwind', 'Three.js'],
-    'Backend Systems': ['FastAPI', 'Node.js', 'MySQL', 'PostgreSQL'],
-    'AI Systems': ['Prompt Engineering', 'LangGraph', 'Gemini API', 'LLM Integration'],
-  };
 
   return (
-    <section id="skills" ref={sectionRef} className="py-32 px-4 relative z-10 border-t border-[rgba(233,30,140,0.2)]">
+    <section id="skills" ref={sectionRef} className="py-32 px-4 relative z-10 border-t border-[rgba(233,30,140,0.2)] bg-[rgba(15,10,25,0.2)]">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-20">
           <SplitTextGlow text="TACTICAL ARSENAL" className="text-4xl md:text-6xl font-black mb-4 justify-center" colorType="primary" />
           <p className="text-[#cc99ff] text-lg font-mono tracking-widest uppercase">Loaded Technical Modules</p>
         </div>
 
-        <div ref={containerRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div data-stagger className="md:col-span-2 lg:col-span-1">
+        <div className="grid lg:grid-cols-12 gap-8 items-center">
+          {/* GitHub Activity Card - Proof of Work */}
+          <div className="lg:col-span-5 w-full flex justify-center">
             <GitHubActivityCard />
           </div>
-          {Object.entries(skills).map(([category, items]) => (
-            <div key={category} data-stagger className="card-premium">
-              <h3 className="text-2xl font-bold mb-8 text-[#ff6eb4]" style={{ fontFamily: 'Orbitron, sans-serif' }}>// {category}</h3>
-              <div className="flex flex-wrap gap-4">
-                {items.map((skill, idx) => (
-                  <span
-                    key={idx}
-                    className="px-5 py-2 border border-[#9b59b6] bg-[rgba(155,89,182,0.1)] text-[#fdf0ff] rounded-sm font-mono text-sm uppercase hover:bg-[#9b59b6] hover:text-white transition-colors cursor-default shadow-[0_0_10px_rgba(155,89,182,0.2)] hover:shadow-[0_0_20px_rgba(155,89,182,0.6)]"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
+          
+          {/* 3D Canvas Rotating Tag Cloud Sphere */}
+          <div className="lg:col-span-7 w-full flex justify-center">
+            <TagCloud3D />
+          </div>
         </div>
       </div>
     </section>
@@ -456,7 +577,6 @@ export default function Home() {
       <div className={`system-scan-line ${activeScan ? 'system-scan-active' : ''}`} />
       
       <CyberpunkNeon />
-      <AlyraAssistant />
       
       {/* Aether OS Core Units */}
       <SystemHUD />
@@ -488,6 +608,8 @@ export default function Home() {
       <div className="relative z-10">
         <Navigation />
         <HeroSection />
+        
+        <AboutSection />
         
         <div className="border-t border-[rgba(233,30,140,0.1)] py-12">
           <div className="max-w-4xl mx-auto px-4 text-center">

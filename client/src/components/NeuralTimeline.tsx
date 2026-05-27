@@ -23,7 +23,7 @@ const timelineData = [
     year: '2026',
     title: 'SYSTEM ARCHITECTURE',
     location: 'FULL-STACK DEPLOYMENT',
-    desc: 'Architected multiple full-stack systems including AI CRM Interaction Hubs and Dynamic Quiz Management Systems.',
+    desc: 'Architected multiple full-stack systems including AXIOM Orchestration Gateways and Zero-Knowledge password managers.',
     icon: <Code2 className="text-[#9b59b6]" size={20} />,
     color: '#9b59b6'
   },
