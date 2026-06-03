@@ -17,11 +17,14 @@ export function TagCloud3D() {
   const [hoveredTag, setHoveredTag] = useState<string | null>(null);
 
   const skills = [
-    'Python', 'JavaScript', 'TypeScript', 
-    'React', 'Redux', 'Tailwind', 'Three.js', 
-    'FastAPI', 'Node.js', 'MySQL', 'PostgreSQL', 
-    'Prompt Engineering', 'LangGraph', 'Gemini API', 'LLM Integration',
-    'Web Crypto', 'Git', 'Docker', 'Redis'
+    'Java', 'Python', 'JavaScript', 'TypeScript', 'SQL', 'HTML5', 'CSS3',
+    'Spring Boot', 'Node.js', 'Express.js', 'FastAPI',
+    'React.js', 'Dragula', 'Bootstrap', 'TailwindCSS', 'Three.js',
+    'PostgreSQL', 'MongoDB', 'Redis', 'SQLite',
+    'JUnit 5', 'MockMvc', 'Mockito', 'PyTest',
+    'Git', 'GitHub', 'Docker', 'Gradle', 'Vercel', 'Render',
+    'RESTful APIs', 'Bitwise Optimization', 'OOP', 'UML/ERD',
+    'Prompt Engineering', 'Gemini API'
   ];
 
   useEffect(() => {

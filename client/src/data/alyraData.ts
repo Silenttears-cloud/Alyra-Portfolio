@@ -21,12 +21,24 @@ BIO:
 Ayushi is a passionate AI and Full-Stack Developer specializing in Python, React, and AI integration. She's focused on prompt engineering and building innovative systems that bridge human creativity with artificial intelligence. Google Gemini Certified Engineer with hands-on experience delivering production-grade applications.
 
 SKILLS & TECH STACK:
-- Languages: Python, JavaScript, TypeScript
-- Frontend: React, Redux, Tailwind CSS, Three.js, GSAP
-- Backend: FastAPI, Node.js, MySQL, PostgreSQL
-- AI/ML: LLM Integration, Prompt Engineering, Google Gemini API, LangGraph
-- Tools: Git, GitHub, VS Code
-- Concepts: Full-Stack Development, Modular Programming, File Architecture, Admin Systems, REST APIs
+- Languages: Java, Python, JavaScript, TypeScript, SQL, HTML5, CSS3
+- Backend Frameworks: Spring Boot, Node.js, Express.js, FastAPI
+- Frontend Libraries: React.js, Dragula, Bootstrap, TailwindCSS, Three.js
+- Databases & Cache: PostgreSQL, MongoDB, Redis, SQLite
+- Testing & Automation: JUnit 5, MockMvc, Mockito, PyTest
+- Tools & Platforms: Git, GitHub, Docker, Gradle, Vercel, Render
+- Core Concepts: RESTful Web Services, Bitwise Optimization, Object-Oriented Programming (OOP), UML/ERD Design, Prompt Engineering
+
+SOFTWARE ENGINEERING EXPERIENCE:
+1. Y Combinator (YC Startup - Shiptivity) | Software Engineering Simulation (June 2026)
+   - Tech: React.js, Dragula, Node.js, Webpack, OpenSSL
+   - Details: Architected an interactive 3-column Kanban dashboard. Integrated Dragula for drag-and-drop synced into React state. Patched http-deceiver dependencies to resolve Node 25.9 compatibility issues and configure OpenSSL.
+2. Hewlett Packard Enterprise (HPE) | Software Engineering Job Simulation (June 2026)
+   - Tech: Java, Spring Boot, Gradle, JUnit 5, MockMvc, REST API
+   - Details: Engineered a RESTful service to process employee data in-memory. Upgraded build to Gradle 9.5.1 for Java 25 (LTS) compatibility. Formulated a Mockito-free test wrapper with JUnit 5 & MockMvc.
+3. Walmart USA | Advanced Software Engineering Simulation (May 2026)
+   - Tech: Java, Bitwise Arithmetic, Data Structures, OOP, UML & ERD
+   - Details: Designed a generic Power of Two Max Heap (SK$-ary heap) in Java using bitwise shifts (<<, >>>) for index transitions. Built profiling benchmarks and created UML / ERD database schemas.
 
 PROJECTS:
 1. Zero-Knowledge Password Manager

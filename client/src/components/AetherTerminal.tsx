@@ -95,10 +95,14 @@ export const AetherTerminal: React.FC<{ isOpen: boolean; onClose: () => void }> 
         break;
 
       case COMMANDS.SKILLS:
-        addLine('CORE LOGIC: Python, JavaScript, TypeScript');
-        addLine('INTERFACE: React, Tailwind CSS, Three.js, Canvas 3D');
-        addLine('BACKEND: FastAPI, Node.js, MySQL, PostgreSQL, Redis');
-        addLine('AI SYSTEMS: Prompt Engineering, LangGraph, Gemini API');
+        addLine('LANGUAGES: Java, Python, JavaScript, TypeScript, SQL, HTML5, CSS3');
+        addLine('BACKEND: Spring Boot, Node.js, Express.js, FastAPI');
+        addLine('FRONTEND: React.js, Dragula, Bootstrap, TailwindCSS, Three.js');
+        addLine('DATABASES & CACHE: PostgreSQL, MongoDB, Redis, SQLite');
+        addLine('TESTING & AUTOMATION: JUnit 5, MockMvc, Mockito, PyTest');
+        addLine('TOOLS & PLATFORMS: Git, GitHub, Docker, Gradle, Vercel, Render');
+        addLine('CORE CONCEPTS: RESTful APIs, Bitwise Optimization, OOP, UML/ERD');
+        addLine('AI INTEGRATIONS: Prompt Engineering, Gemini API');
         break;
 
       case COMMANDS.CONTACT:

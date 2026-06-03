@@ -18,6 +18,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 import { ScrambleText } from '@/components/ScrambleText';
 import { NeuralContactForm } from '@/components/NeuralContactForm';
 import { NeuralTimeline } from '@/components/NeuralTimeline';
+import { NeuralExperience } from '@/components/NeuralExperience';
 import { GitHubActivityCard } from '@/components/GitHubActivityCard';
 import { ResumeScanModal } from '@/components/ResumeScanModal';
 import { useState } from 'react';
@@ -213,7 +214,7 @@ function AboutSection() {
               </div>
               <div className="space-y-1">
                 <span className="text-[10px] text-[#cc99ff] font-mono uppercase tracking-[0.2em]">CORE ARCHITECTURES</span>
-                <p className="text-white text-sm font-bold">Python, React, FastAPI, WebCrypto</p>
+                <p className="text-white text-sm font-bold">Java, Python, React, Spring Boot, FastAPI, WebCrypto</p>
               </div>
               <div className="space-y-1">
                 <span className="text-[10px] text-[#00ff99] font-mono uppercase tracking-[0.2em]">AI PROTOCOLS</span>
@@ -610,6 +611,8 @@ export default function Home() {
         <HeroSection />
         
         <AboutSection />
+        
+        <NeuralExperience />
         
         <div className="border-t border-[rgba(233,30,140,0.1)] py-12">
           <div className="max-w-4xl mx-auto px-4 text-center">
