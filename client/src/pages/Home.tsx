@@ -214,7 +214,7 @@ function AboutSection() {
               </div>
               <div className="space-y-1">
                 <span className="text-[10px] text-[#cc99ff] font-mono uppercase tracking-[0.2em]">CORE ARCHITECTURES</span>
-                <p className="text-white text-sm font-bold">Java, Python, React, Spring Boot, FastAPI, WebCrypto</p>
+                <p className="text-white text-sm font-bold">Java, Rust, Python, React, Spring Boot, FastAPI, WebCrypto</p>
               </div>
               <div className="space-y-1">
                 <span className="text-[10px] text-[#00ff99] font-mono uppercase tracking-[0.2em]">AI PROTOCOLS</span>

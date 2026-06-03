@@ -17,7 +17,7 @@ export function TagCloud3D() {
   const [hoveredTag, setHoveredTag] = useState<string | null>(null);
 
   const skills = [
-    'Java', 'Python', 'JavaScript', 'TypeScript', 'SQL', 'HTML5', 'CSS3',
+    'Java', 'Rust', 'Python', 'JavaScript', 'TypeScript', 'SQL', 'HTML5', 'CSS3',
     'Spring Boot', 'Node.js', 'Express.js', 'FastAPI',
     'React.js', 'Dragula', 'Bootstrap', 'TailwindCSS', 'Three.js',
     'PostgreSQL', 'MongoDB', 'Redis', 'SQLite',

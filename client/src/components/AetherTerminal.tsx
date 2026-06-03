@@ -95,7 +95,7 @@ export const AetherTerminal: React.FC<{ isOpen: boolean; onClose: () => void }> 
         break;
 
       case COMMANDS.SKILLS:
-        addLine('LANGUAGES: Java, Python, JavaScript, TypeScript, SQL, HTML5, CSS3');
+        addLine('LANGUAGES: Java, Rust, Python, JavaScript, TypeScript, SQL, HTML5, CSS3');
         addLine('BACKEND: Spring Boot, Node.js, Express.js, FastAPI');
         addLine('FRONTEND: React.js, Dragula, Bootstrap, TailwindCSS, Three.js');
         addLine('DATABASES & CACHE: PostgreSQL, MongoDB, Redis, SQLite');

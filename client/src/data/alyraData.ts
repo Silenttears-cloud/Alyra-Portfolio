@@ -21,7 +21,7 @@ BIO:
 Ayushi is a passionate AI and Full-Stack Developer specializing in Python, React, and AI integration. She's focused on prompt engineering and building innovative systems that bridge human creativity with artificial intelligence. Google Gemini Certified Engineer with hands-on experience delivering production-grade applications.
 
 SKILLS & TECH STACK:
-- Languages: Java, Python, JavaScript, TypeScript, SQL, HTML5, CSS3
+- Languages: Java, Rust, Python, JavaScript, TypeScript, SQL, HTML5, CSS3
 - Backend Frameworks: Spring Boot, Node.js, Express.js, FastAPI
 - Frontend Libraries: React.js, Dragula, Bootstrap, TailwindCSS, Three.js
 - Databases & Cache: PostgreSQL, MongoDB, Redis, SQLite
