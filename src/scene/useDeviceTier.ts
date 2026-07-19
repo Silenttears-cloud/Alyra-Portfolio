@@ -9,8 +9,17 @@ let current: Tier | null = null;
 function detect(): Tier {
   if (typeof window === "undefined") return "high";
 
-  const cached = sessionStorage.getItem(KEY) as Tier | null;
-  if (cached === "high" || cached === "mid" || cached === "low") return cached;
+  // In development, clear session storage on fresh detection to prevent getting stuck in a downgraded tier.
+  if (import.meta.env.DEV) {
+    try {
+      sessionStorage.removeItem(KEY);
+    } catch {
+      /* ignore */
+    }
+  } else {
+    const cached = sessionStorage.getItem(KEY) as Tier | null;
+    if (cached === "high" || cached === "mid" || cached === "low") return cached;
+  }
 
   const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
   if (reducedMotion) return persist("low");
@@ -76,7 +85,7 @@ export function useDeviceTier(): Tier {
 }
 
 export const TIER_PRESETS = {
-  high: { dpr: [1, 1.75] as [number, number], particles: 2400, orbDetail: 64, halos: 3, postFx: "full" as const, dolly: true, antialias: true, power: "high-performance" as const },
+  high: { dpr: [1, 1.5] as [number, number], particles: 2400, orbDetail: 64, halos: 3, postFx: "full" as const, dolly: true, antialias: true, power: "high-performance" as const },
   mid:  { dpr: [1, 1.25] as [number, number], particles: 1200, orbDetail: 32, halos: 2, postFx: "min"  as const, dolly: true, antialias: true, power: "high-performance" as const },
   low:  { dpr: [1, 1]    as [number, number], particles: 500,  orbDetail: 16, halos: 1, postFx: "none" as const, dolly: false, antialias: false, power: "low-power" as const },
 };
@@ -86,11 +95,24 @@ export function useAutoDowngrade(threshold = 40, sampleMs = 3000) {
   useEffect(() => {
     let raf = 0;
     let frames = 0;
-    let start = performance.now();
+    const initialTime = performance.now();
+    let start = initialTime;
     let done = false;
+    
+    // Give page load / dev compile a 4-second grace period before starting the FPS loop.
+    const gracePeriod = 4000;
+
     const loop = () => {
-      frames++;
       const now = performance.now();
+      
+      if (now - initialTime < gracePeriod) {
+        start = now;
+        frames = 0;
+        raf = requestAnimationFrame(loop);
+        return;
+      }
+
+      frames++;
       if (now - start >= sampleMs) {
         const fps = (frames * 1000) / (now - start);
         if (fps < threshold && !done) {
@@ -107,6 +129,7 @@ export function useAutoDowngrade(threshold = 40, sampleMs = 3000) {
   }, [threshold, sampleMs]);
   return warming;
 }
+
 
 // While the FPS probe is still running, temporarily clamp the tier down one
 // step so we don't blow the frame budget with the full high-tier scene before
